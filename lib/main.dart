@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:productivity_timer/timer_home_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,11 +17,11 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blueGrey
       ),
-      home: Scaffold(
-        appBar: AppBar(title: Text('My Work Timer'),
-        ),
-      ),
+      home: TimerHomePage()
     );
   }
 }
+
+
+
 
