@@ -12,7 +12,8 @@ class TimerHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('My Work Timer'),
+        title: const Text('My Work Timer',
+        style:TextStyle(color:Colors.white),),
         backgroundColor: Colors.blueGrey,
       ),
     body: LayoutBuilder(
@@ -22,40 +23,40 @@ class TimerHomePage extends StatelessWidget {
           children: [
             Row(
               children: [
-                Padding(
+                const Padding(
                   padding: EdgeInsets.all(defaultPadding),
                 ),
                 Expanded(
                   child: ProductivityButton(
-                    color: Color(0xff009688),
+                    color: const Color(0xff009688),
                     text: 'Work',
                     onPressed: emptyMethod,
                     size: double.maxFinite,
                   ),
                 ),
-                Padding(
+                const Padding(
                   padding: EdgeInsets.all(defaultPadding),
                 ),
                 Expanded(
                   child: ProductivityButton(
-                    color: Color(0xff607D8B),
+                    color: const Color(0xff607D8B),
                     text: 'Short Break',
                     onPressed: emptyMethod,
                     size: double.maxFinite,
                   ),
                 ),
-                Padding(
+                const Padding(
                   padding: EdgeInsets.all(defaultPadding),
                 ),
                 Expanded(
                   child: ProductivityButton(
-                    color: Color(0xff455a64),
+                    color: const Color(0xff455a64),
                     text: 'Long Break',
                     onPressed: emptyMethod,
                     size: double.maxFinite,
                   ),
                 ),
-                Padding(
+                const Padding(
                   padding: EdgeInsets.all(defaultPadding),
                 ),
               ],
@@ -66,34 +67,34 @@ class TimerHomePage extends StatelessWidget {
                 lineWidth: 10,
                 percent: 1,
                 center: Text('30:00',style: Theme.of(context).textTheme.displayMedium,),
-                progressColor: Color(0xff009688),
+                progressColor: const Color(0xff009688),
               ),
             ),
             Row(
               children: [
-                Padding(
+                const Padding(
                   padding: EdgeInsets.all(defaultPadding),
                 ),
                 Expanded(
                   child: ProductivityButton(
-                    color: Color(0xff212121),
+                    color: const Color(0xff212121),
                     text: 'Stop',
                     onPressed: emptyMethod,
                     size: double.maxFinite,
                   ),
                 ),
-                Padding(
+                const Padding(
                   padding: EdgeInsets.all(defaultPadding),
                 ),
                 Expanded(
                   child: ProductivityButton(
-                    color: Color(0xff009968),
+                    color: const Color(0xff009968),
                     text: 'Restart',
                     onPressed: emptyMethod,
                     size: double.maxFinite,
                   ),
                 ),
-                Padding(
+                const Padding(
                   padding: EdgeInsets.all(defaultPadding),
                 ),
               ],
