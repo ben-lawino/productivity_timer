@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:productivity_timer/settings_screen.dart';
 import 'package:productivity_timer/timer.dart';
 import 'package:productivity_timer/timermodel.dart';
 import 'package:productivity_timer/widgets.dart';
@@ -15,11 +16,28 @@ class TimerHomePage extends StatefulWidget {
 class _TimerHomePageState extends State<TimerHomePage> {
   final CountDownTimer timer = CountDownTimer();
 
-  void emptyMethod() {}
+  void goToSettings(BuildContext context) {
+    Navigator.push(
+      context,MaterialPageRoute(builder: (context) => SettingsScreen())
+    );
+  }
+
+  void emptyMethod(){}
 
   @override
   Widget build(BuildContext context) {
     timer.startWork();
+
+    // Initialize an empty list to hold PopupMenuItems of type String.
+    final List<PopupMenuItem<String>> menuItems = [];
+// Add a PopupMenuItem to the list with a Text widget as the child and 'Settings' as its value.
+    menuItems.add(
+      PopupMenuItem(
+        child: Text('Settings'), // The visible text in the popup menu
+        value: 'Settings',       // The value associated with this menu item
+      ),
+    );
+
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -27,6 +45,17 @@ class _TimerHomePageState extends State<TimerHomePage> {
           style: TextStyle(color: Colors.white),
         ),
         backgroundColor: Colors.blueGrey,
+        actions: [
+          PopupMenuButton(itemBuilder: (BuildContext context){
+            return menuItems.toList();
+          },
+            onSelected: (s){
+            if(s == 'Settings'){
+              goToSettings(context);
+            }
+            },
+          )
+        ],
       ),
       body: LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {
@@ -86,7 +115,10 @@ class _TimerHomePageState extends State<TimerHomePage> {
                         percent: timer.percent,
                         center: Text(
                           '30:00',
-                          style: Theme.of(context).textTheme.displayMedium,
+                          style: Theme
+                              .of(context)
+                              .textTheme
+                              .displayMedium,
                         ),
                         progressColor: const Color(0xff009688),
                       );
