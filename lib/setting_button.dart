@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
 
+typedef CallbackSetting = void Function(String?, int);
+
 class SettingButton extends StatelessWidget {
   final Color color;
   final String text;
   final int value;
-  final VoidCallback? onPressed;
+  final String? setting;
+  final CallbackSetting callback;
 
   const SettingButton({
     required this.color,
     required this.text,
     required this.value,
-    this.onPressed,
+    this.setting,
+    required this.callback, // `required` added since it's non-nullable
   });
 
   @override
@@ -21,7 +25,7 @@ class SettingButton extends StatelessWidget {
         style: const TextStyle(color: Colors.white),
       ),
       color: color,
-      onPressed: (){},
+      onPressed: () => callback(setting, value),
     );
   }
 }

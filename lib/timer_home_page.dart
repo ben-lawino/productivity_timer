@@ -16,21 +16,25 @@ class TimerHomePage extends StatefulWidget {
 class _TimerHomePageState extends State<TimerHomePage> {
   final CountDownTimer timer = CountDownTimer();
 
+  // Method to navigate to settings screen
   void goToSettings(BuildContext context) {
     Navigator.push(
-      context,MaterialPageRoute(builder: (context) => SettingsScreen())
+      context,
+      MaterialPageRoute(builder: (context) => SettingsScreen()),
     );
   }
 
-  void emptyMethod(){}
+  // Placeholder for a method that can be used later
+  void emptyMethod() {}
 
   @override
   Widget build(BuildContext context) {
+    // Start the work timer; consider using user-defined time
     timer.startWork();
 
     // Initialize an empty list to hold PopupMenuItems of type String.
     final List<PopupMenuItem<String>> menuItems = [];
-// Add a PopupMenuItem to the list with a Text widget as the child and 'Settings' as its value.
+    // Add a PopupMenuItem to the list for settings.
     menuItems.add(
       PopupMenuItem(
         child: Text('Settings'), // The visible text in the popup menu
@@ -46,13 +50,14 @@ class _TimerHomePageState extends State<TimerHomePage> {
         ),
         backgroundColor: Colors.blueGrey,
         actions: [
-          PopupMenuButton(itemBuilder: (BuildContext context){
-            return menuItems.toList();
-          },
-            onSelected: (s){
-            if(s == 'Settings'){
-              goToSettings(context);
-            }
+          PopupMenuButton(
+            itemBuilder: (BuildContext context) {
+              return menuItems.toList();
+            },
+            onSelected: (s) {
+              if (s == 'Settings') {
+                goToSettings(context);
+              }
             },
           )
         ],
@@ -62,6 +67,7 @@ class _TimerHomePageState extends State<TimerHomePage> {
           final double availableWidth = constraints.maxWidth;
           return Column(
             children: [
+              // Row of buttons for Work, Short Break, and Long Break
               Row(
                 children: [
                   const Padding(
@@ -71,7 +77,7 @@ class _TimerHomePageState extends State<TimerHomePage> {
                     child: ProductivityButton(
                       color: const Color(0xff009688),
                       text: 'Work',
-                      onPressed: emptyMethod,
+                      onPressed: emptyMethod, // Placeholder for work button action
                       size: double.maxFinite,
                     ),
                   ),
@@ -82,7 +88,7 @@ class _TimerHomePageState extends State<TimerHomePage> {
                     child: ProductivityButton(
                       color: const Color(0xff607D8B),
                       text: 'Short Break',
-                      onPressed: () => timer.startBreak(true),
+                      onPressed: () => timer.startBreak(true), // Start short break
                       size: double.maxFinite,
                     ),
                   ),
@@ -93,7 +99,7 @@ class _TimerHomePageState extends State<TimerHomePage> {
                     child: ProductivityButton(
                       color: const Color(0xff455a64),
                       text: 'Long Break',
-                      onPressed: () => timer.startBreak(false),
+                      onPressed: () => timer.startBreak(false), // Start long break
                       size: double.maxFinite,
                     ),
                   ),
@@ -104,25 +110,22 @@ class _TimerHomePageState extends State<TimerHomePage> {
               ),
               Expanded(
                 child: StreamBuilder<TimerModel>(
-                    stream: timer.stream(),
-                    builder: (BuildContextcontext, AsyncSnapshot snapshot) {
-                      TimerModel timer = (snapshot.data == '00:00')
-                          ? TimerModel('00:00', 1)
-                          : snapshot.data;
-                      return CircularPercentIndicator(
-                        radius: availableWidth / 3,
-                        lineWidth: 10,
-                        percent: timer.percent,
-                        center: Text(
-                          '30:00',
-                          style: Theme
-                              .of(context)
-                              .textTheme
-                              .displayMedium,
-                        ),
-                        progressColor: const Color(0xff009688),
-                      );
-                    }),
+                  stream: timer.stream(),
+                  builder: (BuildContext context, AsyncSnapshot<TimerModel> snapshot) {
+                    // Handle the timer data coming from the stream
+                    TimerModel timerModel = snapshot.data ?? TimerModel('00:00', 1); // Default if no data
+                    return CircularPercentIndicator(
+                      radius: availableWidth / 3,
+                      lineWidth: 10,
+                      percent: timerModel.percent ?? 1, // Fallback to 1 if null
+                      center: Text(
+                        timerModel.timer ?? '00:00', // Use '00:00' if time is null
+                        style: Theme.of(context).textTheme.displayLarge,
+                      ),
+                      progressColor: const Color(0xff009688),
+                    );
+                  },
+                ),
               ),
               Row(
                 children: [
@@ -133,7 +136,9 @@ class _TimerHomePageState extends State<TimerHomePage> {
                     child: ProductivityButton(
                       color: const Color(0xff212121),
                       text: 'Stop',
-                      onPressed: () => timer.stopTimer,
+                      onPressed: () {
+                        timer.stopTimer(); // Correctly call the stopTimer method
+                      },
                       size: double.maxFinite,
                     ),
                   ),
@@ -144,7 +149,9 @@ class _TimerHomePageState extends State<TimerHomePage> {
                     child: ProductivityButton(
                       color: const Color(0xff009968),
                       text: 'Restart',
-                      onPressed: () => timer.startTimer,
+                      onPressed: () {
+                        timer.startWork(); // Restart the timer (consider passing user-defined time)
+                      },
                       size: double.maxFinite,
                     ),
                   ),
