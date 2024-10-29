@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:productivity_timer/settings_screen.dart';
 import 'package:productivity_timer/timer.dart';
@@ -7,7 +8,7 @@ import 'constants.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
 class TimerHomePage extends StatefulWidget {
-  TimerHomePage({super.key});
+  const TimerHomePage({super.key});
 
   @override
   State<TimerHomePage> createState() => _TimerHomePageState();
@@ -24,19 +25,15 @@ class _TimerHomePageState extends State<TimerHomePage> {
     );
   }
 
-  // Placeholder for a method that can be used later
-  void emptyMethod() {}
-
   @override
   Widget build(BuildContext context) {
-    // Start the work timer; consider using user-defined time
-    timer.startWork();
+
 
     // Initialize an empty list to hold PopupMenuItems of type String.
     final List<PopupMenuItem<String>> menuItems = [];
     // Add a PopupMenuItem to the list for settings.
     menuItems.add(
-      PopupMenuItem(
+      const PopupMenuItem(
         child: Text('Settings'), // The visible text in the popup menu
         value: 'Settings',       // The value associated with this menu item
       ),
@@ -77,7 +74,7 @@ class _TimerHomePageState extends State<TimerHomePage> {
                     child: ProductivityButton(
                       color: const Color(0xff009688),
                       text: 'Work',
-                      onPressed: emptyMethod, // Placeholder for work button action
+                      onPressed: () => timer.startWork, // Placeholder for work button action
                       size: double.maxFinite,
                     ),
                   ),
@@ -115,6 +112,7 @@ class _TimerHomePageState extends State<TimerHomePage> {
                     // Handle the timer data coming from the stream
                     TimerModel timerModel = snapshot.data ?? TimerModel('00:00', 1); // Default if no data
                     return CircularPercentIndicator(
+                      circularStrokeCap: CircularStrokeCap.round,
                       radius: availableWidth / 3,
                       lineWidth: 10,
                       percent: timerModel.percent ?? 1, // Fallback to 1 if null
